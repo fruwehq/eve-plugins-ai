@@ -1,0 +1,12 @@
+# AI/dev package identity registry (catalog-base contribution).
+# Package install metadata lives in each package's eve-plugin.yaml. Moved here
+# from eve-providers/_catalog-base in v4.2 so this repo owns its packages end to
+# end (registry + manifests) — no ghost entries when this source isn't pulled.
+packages:
+  - id: claude
+  - id: codex-cli
+  - id: dev-toolchain
+  - id: goose
+  - id: hermes
+  - id: opencode
+  - id: vscode
