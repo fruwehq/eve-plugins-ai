@@ -9,6 +9,16 @@ commands:
 supports: {os_families: [ubuntu]}
 down: {destructive: true}
 env: []
+update:
+  # dev-toolchain installs the container engine + Rust toolchain, so it owns
+  # their upgrades.
+  ubuntu: |
+    command -v docker >/dev/null 2>&1 && sudo apt-get install --only-upgrade -y docker-ce docker-ce-cli containerd.io 2>/dev/null || echo "skip"
+    command -v rustup >/dev/null 2>&1 && rustup update || echo "skip"
+vagrant:
+  inline_provision:
+    ubuntu: |
+      sudo apt-get install -y build-essential pkg-config libssl-dev
 install:
   ubuntu:
     steps: [base.sh, timezone.sh, provision/ubuntu/dev-toolchain.sh]

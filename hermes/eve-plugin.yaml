@@ -9,6 +9,8 @@ commands:
 supports: {os_families: [ubuntu]}
 down: {destructive: true}
 env: []
+update:
+  ubuntu: 'command -v hermes >/dev/null 2>&1 && hermes update || echo "skip"'
 install:
   ubuntu:
     steps: [base.sh, timezone.sh, provision/ubuntu/hermes.sh]
