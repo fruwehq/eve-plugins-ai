@@ -1,0 +1,5 @@
+api_version: eve.plugin/v1
+kind: bundle
+id: dev-ai
+display_name: AI Developer Toolchain
+members: [claude, codex-cli, dev-toolchain, goose, hermes, opencode, vscode]

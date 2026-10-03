@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, ready_for_review, reopened, synchronize]
     branches: [main]
 
 jobs:
@@ -19,20 +20,21 @@ jobs:
       - uses: actions/checkout@v5
         with:
           repository: fruwehq/eve
+          # Standalone bundles require the validated v4.5 core contract.
+          ref: v4.5
           path: eve
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - run: pip install jsonschema pyyaml
+      - run: pip install ./eve
 
       - name: Run plugin-test against every package
         run: |
           set -e
-          for manifest in */eve-plugin.yaml; do
-            plugin="$(dirname "$manifest")"
-            echo "::group::plugin-test $plugin"
-            eve/scripts/plugin-test "$plugin"
+          git ls-files '*eve-plugin.yaml' | while IFS= read -r manifest; do
+            echo "::group::plugin-test $manifest"
+            eve/scripts/plugin-test "$manifest"
             echo "::endgroup::"
           done

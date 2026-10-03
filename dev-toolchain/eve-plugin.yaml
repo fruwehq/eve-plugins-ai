@@ -22,6 +22,3 @@ vagrant:
 install:
   ubuntu:
     steps: [base.sh, timezone.sh, provision/ubuntu/dev-toolchain.sh]
-bundles:
-  - id: dev-ai
-    includes: [dev-toolchain, goose, claude, codex-cli, hermes, opencode, vscode]
