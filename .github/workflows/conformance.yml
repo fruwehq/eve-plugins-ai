@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, ready_for_review, reopened, synchronize]
     branches: [main]
 
 jobs:
@@ -30,9 +31,8 @@ jobs:
       - name: Run plugin-test against every package
         run: |
           set -e
-          for manifest in */eve-plugin.yaml; do
-            plugin="$(dirname "$manifest")"
-            echo "::group::plugin-test $plugin"
-            eve/scripts/plugin-test "$plugin"
+          git ls-files '*eve-plugin.yaml' | while IFS= read -r manifest; do
+            echo "::group::plugin-test $manifest"
+            eve/scripts/plugin-test "$manifest"
             echo "::endgroup::"
           done
