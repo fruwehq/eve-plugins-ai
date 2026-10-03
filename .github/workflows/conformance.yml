@@ -20,13 +20,15 @@ jobs:
       - uses: actions/checkout@v5
         with:
           repository: fruwehq/eve
+          # Standalone bundles require the validated v4.5 core contract.
+          ref: v4.5
           path: eve
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - run: pip install jsonschema pyyaml
+      - run: pip install ./eve
 
       - name: Run plugin-test against every package
         run: |
